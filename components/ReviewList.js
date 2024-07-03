@@ -18,7 +18,8 @@ const reviewList = {
            `
            ,props:{
             reviews:{
-                type: Array
+                type: Array,
+                required: true
             }
            },
            setup(props){
