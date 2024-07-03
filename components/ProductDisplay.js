@@ -2,7 +2,7 @@ const productDisplay = {
     template:
     /*html*/
     `
-    <div class="cart">Cart({{ cart }})</div>
+    
     <div class="product-display">
     <div class="product-container">
                 <div class="product-image">
@@ -29,6 +29,10 @@ const productDisplay = {
             </div>
             <button class="button" :disabled="!inStock" @click="addToCart" 
             :class="{ disabledButton: !inStock }">Add To Cart</button>
+            <div>
+            <review-form></review-form>
+            </div>
+             <button class="button" @click="removeFromCart" :class="{ disabledButton: !inStock }">Remove From Cart</button>
             <p v-if="inventory > 1">On sale</p>
             <h2>{{ description }}</h2>
             
@@ -38,14 +42,16 @@ const productDisplay = {
     props:{
         premium: Boolean
     },
-    setup(props) {   
-        const shipping = computed(()=>{
-        if (props.premium){
-            return 'Free'
-        } else {
-            return 30
-        }
-    })
+    setup(props,{emit}) {  
+        
+        function addToCart() {
+                emit('add-to-cart', variants.value[selectedVariant.value].id)
+            }
+
+            function removeFromCart() {
+                emit('remove-from-cart', variants.value[selectedVariant.value].id)
+            }
+        
 
         
         
@@ -67,7 +73,6 @@ const productDisplay = {
             {id: 2235, color: 'blue',image: './assets/images/socks_blue.jpg', quantity:0,onSale:false}
         ])
         const selectedVariant =ref(0)
-        const cart = ref(0)
         function updateVariant(index){
             selectedVariant.value = index;
         }
@@ -79,10 +84,10 @@ const productDisplay = {
         })
         const description =ref ("greats socks")
         const onSale = ref(true)
-            function addToCart() {
-                cart.value +=1
-            }
-            const title = computed(() => {
+
+            
+            
+        const title = computed(() => {
                 if((variants.value[selectedVariant.value].onSale)){
                   return brand.value + ' ' +product.value + ' is on Sale'
                 } else {
@@ -115,7 +120,6 @@ const productDisplay = {
             inventory,
             details,
             variants,
-            cart,
             sizes,
             onSale,
             selectedVariant,
@@ -124,7 +128,8 @@ const productDisplay = {
             updateImage,
             toggleInStock,
             onSaleMessage,
-            shipping,
+            removeFromCart
+          
         
             
             

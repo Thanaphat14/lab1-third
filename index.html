@@ -13,7 +13,8 @@
 <body>
     <div id="app">
         <div class="nav-bar"></div>
-        <product-display :premium="premium"></product-display>
+        <div class="cart">Cart({{ cart }})</div>
+        <product-display :premium="premium" @add-to-cart = "updateCart" @remove-from-cart = "removeFromCart" ></product-display>
         <product-detail :detail="detail"></product-detail>
        
             
@@ -23,6 +24,7 @@
     <!-- Import Js -->
     <script src="./components/ProductDisplay.js"></script>
     <script src="./components/productDetail.js"></script>
+    <script src="./components/ReviewForm.js"></script>
     <script src="./main.js"></script>
 </body>
 

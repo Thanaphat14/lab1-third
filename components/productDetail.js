@@ -8,7 +8,7 @@ const productDetail = {
     props:{
         detail: String
     },
-    setup(props) {   
+    setup(props ,) {   
         
         const detail = ref('50% cotton30% wool20% polyester')
 
