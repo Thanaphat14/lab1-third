@@ -29,12 +29,12 @@ const productDisplay = {
             </div>
             <button class="button" :disabled="!inStock" @click="addToCart" 
             :class="{ disabledButton: !inStock }">Add To Cart</button>
-            <div>
-            <review-form></review-form>
-            </div>
+
              <button class="button" @click="removeFromCart" :class="{ disabledButton: !inStock }">Remove From Cart</button>
             <p v-if="inventory > 1">On sale</p>
             <h2>{{ description }}</h2>
+            <review-list v-if="reviews && reviews.length" :reviews="reviews"></review-list>
+             <review-form @review-submitted="addReview"></review-form>
             
         </div>
     </div>
@@ -52,7 +52,11 @@ const productDisplay = {
                 emit('remove-from-cart', variants.value[selectedVariant.value].id)
             }
         
+            const reviews = ref([])
 
+        function addReview(review) {
+            reviews.value.push(review)
+        }
         
         
         const product = ref ('Boots')
@@ -128,7 +132,9 @@ const productDisplay = {
             updateImage,
             toggleInStock,
             onSaleMessage,
-            removeFromCart
+            removeFromCart,
+            reviews,
+            addReview
           
         
             
